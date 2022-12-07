@@ -1,27 +1,27 @@
 with open('input.txt') as f:
     input = f.read().splitlines()
 
-cwd = []
-ds = {}
+wd = []  # working directory
+ps = {}  # paths
 
 for line in input:
     if line.startswith('$ cd'):
-        _, _, d = line.split(' ')
+        _, _, d = line.split(' ')  # $ cd /
         if d == '/':
-            cwd = ['.']
+            wd = ['.']
         elif d == '..':
-            cwd.pop()
+            wd.pop()
         else:
-            cwd.append(d)
-        path = '/'.join(cwd)
-        if path not in ds:
-            ds[path] = 0
+            wd.append(d)
+        p = '/'.join(wd)
+        if p not in ps:
+            ps[p] = 0
     elif line[0].isdigit():
-        s, _ = line.split(' ')
-        for i in range(len(cwd)):
-            path = '/'.join(cwd[0:i + 1])
-            ds[path] += int(s)
+        s, _ = line.split(' ')  # 62158 sfwnts.hbj
+        for i in range(len(wd)):
+            p = '/'.join(wd[0:i + 1])
+            ps[p] += int(s)
 
-total = sum([s for d,s in ds.items() if s <= 100000])
+total = sum([s for _, s in ps.items() if s <= 100000])
 assert total == 2031851
 print(total)

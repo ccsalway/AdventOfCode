@@ -1,28 +1,28 @@
 with open('input.txt') as f:
     input = f.read().splitlines()
 
-cwd = []
-ds = {}
+wd = []  # working directory
+ps = {}  # paths
 
 for line in input:
     if line.startswith('$ cd'):
-        _, _, d = line.split(' ')
+        _, _, d = line.split(' ')  # $ cd /
         if d == '/':
-            cwd = ['.']
+            wd = ['.']
         elif d == '..':
-            cwd.pop()
+            wd.pop()
         else:
-            cwd.append(d)
-        path = '/'.join(cwd)
-        if path not in ds:
-            ds[path] = 0
+            wd.append(d)
+        p = '/'.join(wd)
+        if p not in ps:
+            ps[p] = 0
     elif line[0].isdigit():
-        s, _ = line.split(' ')
-        for i in range(len(cwd)):
-            path = '/'.join(cwd[0:i + 1])
-            ds[path] += int(s)
+        s, _ = line.split(' ')  # 62158 sfwnts.hbj
+        for i in range(len(wd)):
+            p = '/'.join(wd[0:i + 1])
+            ps[p] += int(s)
 
-needed = 30000000 - 70000000 + ds['.']
-size = min([s for d,s in ds.items() if s > needed])
+needed = 30000000 - 70000000 + ps['.']
+size = min([s for _, s in ps.items() if s > needed])
 assert size == 2568781
 print(size)
