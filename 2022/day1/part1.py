@@ -12,5 +12,6 @@ with open('input.txt') as f:
             subtotal = 0
 
 result = max(totals)
-assert result == 71300
 print(result)
+
+assert result == 71300

@@ -17,5 +17,6 @@ with open('input.txt') as f:
         o, y = line.split(' ')
         total_score += values[o][y] + scores[y]
 
-assert total_score == 11980
 print(total_score)
+
+assert total_score == 11980

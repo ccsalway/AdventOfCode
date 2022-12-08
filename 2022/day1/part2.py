@@ -14,5 +14,6 @@ with open('input.txt') as f:
 totals.sort(reverse=True)
 
 result = sum(totals[0:3])
-assert result == 209691
 print(result)
+
+assert result == 209691

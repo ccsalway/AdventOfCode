@@ -23,5 +23,6 @@ for line in input:
             ps[p] += int(s)
 
 total = sum([s for _, s in ps.items() if s <= 100000])
-assert total == 2031851
 print(total)
+
+assert total == 2031851

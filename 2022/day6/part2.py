@@ -6,5 +6,6 @@ for i in range(len(input)):
         break
 
 result = i + 14
-assert result == 2250
 print(result)
+
+assert result == 2250

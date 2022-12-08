@@ -13,5 +13,6 @@ with open('input.txt') as f:
                 total += i - 65 + 27
             lines = []
 
-assert total == 2752
 print(total)
+
+assert total == 2752

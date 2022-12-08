@@ -12,5 +12,6 @@ for line in moves.splitlines():
     del stacks[sn - 1][qn * -1:]
 
 result = ''.join([s[-1] for s in stacks])
-assert result == 'SSCGWJCRB'
 print(result)
+
+assert result == 'SSCGWJCRB'

@@ -12,5 +12,6 @@ with open('input.txt') as f:
         elif i >= 65:  # A-Z
             total += i - 65 + 27
 
-assert total == 7821
 print(total)
+
+assert total == 7821

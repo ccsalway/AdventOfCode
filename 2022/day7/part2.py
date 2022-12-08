@@ -24,5 +24,6 @@ for line in input:
 
 needed = 30000000 - 70000000 + ps['.']
 size = min([s for _, s in ps.items() if s >= needed])
-assert size == 2568781
 print(size)
+
+assert size == 2568781

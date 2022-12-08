@@ -12,5 +12,6 @@ for line in moves.splitlines():
         stacks[fn - 1].append(stacks[sn - 1].pop())
 
 result = ''.join([s[-1] for s in stacks])
-assert result == 'CWMTGHBDW'
 print(result)
+
+assert result == 'CWMTGHBDW'

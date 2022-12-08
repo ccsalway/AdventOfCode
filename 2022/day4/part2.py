@@ -9,5 +9,6 @@ with open('input.txt') as f:
                 (f1 <= s1 <= f2 or f1 <= s2 <= f2):
             total += 1
 
-assert total == 827
 print(total)
+
+assert total == 827
