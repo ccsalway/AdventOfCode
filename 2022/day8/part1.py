@@ -3,20 +3,22 @@ with open('input.txt') as f:
 
 gh = [[int(x) for x in list(line)] for line in input]
 gv = list(zip(*gh))
-vs = 0
+gx, gy = len(gh[0]), len(gh)
+v = 0
 
-for row in range(len(gh)):
-    for col in range(len(gh[0])):
+for row in range(gy):
+    for col in range(gx):
         t = gh[row][col]  # tree
         r = gh[row][col + 1:]  # right
         d = gv[col][row + 1:]  # down
-        l = gh[row][0:col][::-1]  # left
-        u = gv[col][0:row][::-1]  # up
+        l = gh[row][:col][::-1]  # left
+        u = gv[col][:row][::-1]  # up
         for n in [r, d, l, u]:
+            # visible from at least one side
             if not n or max(n) < t:
-                vs += 1
+                v += 1
                 break
 
-print(vs)
+print(v)
 
-assert vs == 1827
+assert v == 1827

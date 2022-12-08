@@ -3,17 +3,19 @@ with open('input.txt') as f:
 
 gh = [[int(x) for x in list(line)] for line in input]
 gv = list(zip(*gh))
+gx, gy = len(gh[0]), len(gh)
 vs = []
 
-for row in range(len(gh)):
-    for col in range(len(gh[0])):
+for row in range(gy):
+    for col in range(gx):
         t = gh[row][col]  # tree
         r = gh[row][col + 1:]  # right
         d = gv[col][row + 1:]  # down
-        l = gh[row][0:col][::-1]  # left
-        u = gv[col][0:row][::-1]  # up
+        l = gh[row][:col][::-1]  # left
+        u = gv[col][:row][::-1]  # up
         ts = 1
         for n in [r, d, l, u]:
+            # visual space
             s = 0
             for x in n:
                 s += 1
