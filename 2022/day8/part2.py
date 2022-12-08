@@ -11,10 +11,10 @@ for row in range(gy):
         t = gh[row][col]  # tree
         r = gh[row][col + 1:]  # right
         d = gv[col][row + 1:]  # down
-        l = gh[row][:col][::-1]  # left
+        f = gh[row][:col][::-1]  # left
         u = gv[col][:row][::-1]  # up
         ts = 1
-        for n in [r, d, l, u]:
+        for n in [r, d, f, u]:
             # visual space
             s = 0
             for x in n:
