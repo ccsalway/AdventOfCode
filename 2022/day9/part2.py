@@ -1,6 +1,7 @@
 with open('input.txt') as f:
     input = f.read().splitlines()
 
+m = {'R': [1, 0], 'D': [0, -1], 'L': [-1, 0], 'U': [0, 1]}
 r = [[0, 0] for _ in range(10)]
 p = {(0, 0)}
 
@@ -8,44 +9,19 @@ for line in input:
     d, n = line.split(' ')
     for _ in range(int(n)):
         # move head
-        if d == 'R':
-            r[-1][0] += 1
-        elif d == 'U':
-            r[-1][1] += 1
-        elif d == 'L':
-            r[-1][0] -= 1
-        elif d == 'D':
-            r[-1][1] -= 1
+        r[-1][0] += m[d][0]
+        r[-1][1] += m[d][1]
         # move rest
-        for x in range(1, len(r)):  # 1 2 3 4 5 6 7 8 9 10
-            # move right
-            if r[-x][0] - r[-x - 1][0] >= 2:
-                r[-x - 1][0] += 1  # move right 1
-                if r[-x][1] > r[-x - 1][1]:
-                    r[-x - 1][1] += 1  # move up 1
-                if r[-x][1] < r[-x - 1][1]:
-                    r[-x - 1][1] -= 1  # move down 1
-            # move up
-            if r[-x][1] - r[-x - 1][1] >= 2:
-                r[-x - 1][1] += 1  # move up 1
-                if r[-x][0] > r[-x - 1][0]:
-                    r[-x - 1][0] += 1  # move right 1
-                if r[-x][0] < r[-x - 1][0]:
-                    r[-x - 1][0] -= 1  # move left 1
-            # move left
-            if r[-x][0] - r[-x - 1][0] <= -2:
-                r[-x - 1][0] -= 1  # move left 1
-                if r[-x][1] > r[-x - 1][1]:
-                    r[-x - 1][1] += 1  # move up 1
-                if r[-x][1] < r[-x - 1][1]:
-                    r[-x - 1][1] -= 1  # move down 1
-            # move down
-            if r[-x][1] - r[-x - 1][1] <= -2:
-                r[-x - 1][1] -= 1  # move down 1
-                if r[-x][0] > r[-x - 1][0]:
-                    r[-x - 1][0] += 1  # move right 1
-                if r[-x][0] < r[-x - 1][0]:
-                    r[-x - 1][0] -= 1  # move left 1
+        for x in range(1, len(r)):
+            h, t = r[-x], r[-x - 1]
+            if not -2 < h[0] - t[0] < 2:  # x too far away
+                t[0] += 1 if h[0] > t[0] else -1
+                if h[1] != t[1]:  # need to move diagonal
+                    t[1] += 1 if h[1] > t[1] else -1
+            if not -2 < h[1] - t[1] < 2:  # y too far away
+                t[1] += 1 if h[1] > t[1] else -1
+                if h[0] != t[0]:  # need to move diagonal
+                    t[0] += 1 if h[0] > t[0] else -1
         p.add(tuple(r[0]))
 
 total = len(p)
