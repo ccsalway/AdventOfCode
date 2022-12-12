@@ -1,51 +1,54 @@
 with open('input.txt') as f:
     rows = f.read().splitlines()
 
-m, start, e = [], [], ()
-for y in range(len(rows)):
-    m.append([])
-    for x in range(len(rows[y])):
-        col = rows[y][x]
-        v = ord(col)
-        if col in ['b', 'S']:  # less b's to check than a's
-            start.append((y, x))
-            if col == 'S':
-                v = ord('a')
-        elif col == 'E':
-            v = ord('z') + 1
-            e = y, x
-        m[-1].append(v)
+t, s, e = [], [], ()
 
-steps = []
-for s in start:
-    p = []
-    for y in range(len(rows)):
-        p.append([])
-        for x in range(len(rows[y])):
-            p[-1].append(0)
-    p[s[0]][s[1]] = 1  # starting position
+# topo matrix
+for y in range(len(rows)):
+    t.append([])
+    for x in range(len(rows[y])):
+        ltr = rows[y][x]
+        h = ord(ltr)  # height at position
+        if ltr == 'S':
+            s.append((y, x))  # add to starting positions
+            h = ord('a')
+        elif ltr == 'E':
+            e = y, x  # ending position
+            h = ord('z')
+        elif ltr == 'b':  # less b's to check than a's
+            s.append((y, x))  # add to starting positions
+        t[-1].append(h)
+
+ks = []
+for start in s:
+
+    # path matrix
+    p = [[int(n) for n in '0' * len(row)] for row in rows]
+    p[start[0]][start[1]] = 1  # starting position
+
+    # step counter
     k = 0
     while p[e[0]][e[1]] == 0:
         k += 1
         for y in range(len(rows)):
             for x in range(len(rows[y])):
                 if p[y][x] == k:
-                    n = m[y][x]
+                    n = t[y][x]
                     # left
-                    if x > 0 and p[y][x - 1] == 0 and m[y][x - 1] <= n + 1:
+                    if x > 0 and p[y][x - 1] == 0 and t[y][x - 1] <= n + 1:
                         p[y][x - 1] = k + 1
                     # up
-                    if y > 0 and p[y - 1][x] == 0 and m[y - 1][x] <= n + 1:
+                    if y > 0 and p[y - 1][x] == 0 and t[y - 1][x] <= n + 1:
                         p[y - 1][x] = k + 1
                     # right
-                    if x < len(rows[y]) - 1 and p[y][x + 1] == 0 and m[y][x + 1] <= n + 1:
+                    if x < len(rows[y]) - 1 and p[y][x + 1] == 0 and t[y][x + 1] <= n + 1:
                         p[y][x + 1] = k + 1
                     # down
-                    if y < len(rows) - 1 and p[y + 1][x] == 0 and m[y + 1][x] <= n + 1:
+                    if y < len(rows) - 1 and p[y + 1][x] == 0 and t[y + 1][x] <= n + 1:
                         p[y + 1][x] = k + 1
-    steps.append(k + 1)  # add 1 as we started from 'b'
+    ks.append(k if rows[start[0]][start[1]] == 'S' else k + 1)  # add 1 if we started from 'b'
 
-shortest = sorted(steps)[0]
+shortest = sorted(ks)[0]
 print(shortest)
 
 assert shortest == 321
