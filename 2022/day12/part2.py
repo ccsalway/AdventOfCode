@@ -9,14 +9,12 @@ for y in range(len(rows)):
     for x in range(len(rows[y])):
         ltr = rows[y][x]
         h = ord(ltr)  # height at position
-        if ltr == 'S':
+        if ltr in ['S', 'a']:
             s.append((y, x))  # add to starting positions
             h = ord('a')
         elif ltr == 'E':
             e = y, x  # ending position
             h = ord('z')
-        elif ltr == 'b':  # less b's to check than a's
-            s.append((y, x))  # add to starting positions
         t[-1].append(h)
 
 ks = []
@@ -52,11 +50,9 @@ for start in s:
                         unreachable = 0
                         p[y + 1][x] = k + 1
         if unreachable == 1:
-            print("Unreachable: ", start, k)
             break
     if unreachable == 0:
-        # ks.append(k)  # starting from 'a'
-        ks.append(k if rows[start[0]][start[1]] == 'S' else k + 1)  # add 1 if we started from 'b'
+        ks.append(k)
 
 shortest = sorted(ks)[0]
 print(shortest)

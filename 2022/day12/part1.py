@@ -47,9 +47,10 @@ while p[e[0]][e[1]] == 0:
                     unreachable = 0
                     p[y + 1][x] = k + 1
     if unreachable == 1:
-        print("Unreachable: ", s, k)
         break
 
-print(k)
-
-assert k == 330
+if unreachable == 1:
+    print("Unreachable from", s)
+else:
+    print(k)
+    assert k == 330
