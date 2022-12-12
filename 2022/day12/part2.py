@@ -30,23 +30,33 @@ for start in s:
     k = 0
     while p[e[0]][e[1]] == 0:
         k += 1
+        unreachable = 1
         for y in range(len(rows)):
             for x in range(len(rows[y])):
                 if p[y][x] == k:
                     n = t[y][x]
                     # left
                     if x > 0 and p[y][x - 1] == 0 and t[y][x - 1] <= n + 1:
+                        unreachable = 0
                         p[y][x - 1] = k + 1
                     # up
                     if y > 0 and p[y - 1][x] == 0 and t[y - 1][x] <= n + 1:
+                        unreachable = 0
                         p[y - 1][x] = k + 1
                     # right
                     if x < len(rows[y]) - 1 and p[y][x + 1] == 0 and t[y][x + 1] <= n + 1:
+                        unreachable = 0
                         p[y][x + 1] = k + 1
                     # down
                     if y < len(rows) - 1 and p[y + 1][x] == 0 and t[y + 1][x] <= n + 1:
+                        unreachable = 0
                         p[y + 1][x] = k + 1
-    ks.append(k if rows[start[0]][start[1]] == 'S' else k + 1)  # add 1 if we started from 'b'
+        if unreachable == 1:
+            print("Unreachable: ", start, k)
+            break
+    if unreachable == 0:
+        # ks.append(k)  # starting from 'a'
+        ks.append(k if rows[start[0]][start[1]] == 'S' else k + 1)  # add 1 if we started from 'b'
 
 shortest = sorted(ks)[0]
 print(shortest)
